@@ -1,81 +1,45 @@
+# -*- coding: utf-8 -*-
 """
-This file will validate input and return a string triangle type.
+Created on Sep 18,2021
+The primary goal of this file is to demonstrate a simple python program to classify triangles
+@author: Vaibhav
 """
+
+
 def classify_triangle(side_a, side_b, side_c):
-    """
-    This function accepts 3 inputs and returns a string triangle type.
-    """
-    types = {'equilateral': 'equilateral',
-             'isosceles': 'isosceles',
-             'scalene': 'scalene',
-             'isosceles and right': "isosceles and right",
-             'scalene and right': 'scalene and right',
-             'not valid': 'not valid',
-             'not a triangle': 'not a triangle'}
-    sides = [side_a, side_b, side_c]
-    try:
-        if not validate_input(sides):
-            return types['not valid']
-    except TypeError:
-        return types['not valid']
-
-    sides = parse_input(sides)
-
-    if not validate_sides(sides):
-        return types['not a triangle']
-
-    side_a = sides[0]
-    side_b = sides[1]
-    side_c = sides[2]
+    """Logic"""
+    if check_side(side_a, side_b, side_c) == 'InvalidInput':
+        return "InvalidInput"
+    # if side_a <= 0 or side_b <= 0 or side_c <= 0 or side_a >= 200 or side_b >= 200:
+    #     return 'InvalidInput'
+    # if not(isinstance(side_a, int)
+    #         and isinstance(side_b, int)
+    #         and isinstance(side_c, int)) or side_c >= 200:
+    #     return 'InvalidInput'
+    # if (side_a + side_b <= side_c) or (side_a + side_c <= side_b) or (side_b + side_c <= side_a):
+    #     return 'NotATriangle'
 
     if side_a == side_b and side_b == side_c:
-        triangle_types = types['equilateral']
-    elif side_a == side_b or side_b == side_c:
-        triangle_types = types['isosceles']
-        if check_right(side_a, side_b, side_c):
-            triangle_types = types['isosceles and right']
-    else:
-        triangle_types = types['scalene']
-        if check_right(side_a, side_b, side_c):
-            triangle_types = types['scalene and right']
-
-    return triangle_types
-
-
-def validate_input(sides):
-    """
-    check input range
-    """
-    for element in sides:
-        if element <= 0 or element > 2147483648:
-            return False
-
-    return True
+        return 'Equilateral'
+    if ((side_a ** 2) + (side_b ** 2)) == (side_c ** 2) \
+            or ((side_a ** 2) + (side_c ** 2)) == (side_b ** 2) \
+            or ((side_b ** 2) + (side_c ** 2)) == (side_a ** 2):
+        return 'Right'
+    if (side_b not in (side_a, side_c)) and (side_c not in (side_a, side_b)):
+        return 'Scalene'
+    if side_a == side_b or side_b == side_c or side_a == side_c:
+        return 'Isosceles'
+    return None
 
 
-def parse_input(sides):
-    """
-    convert input to float
-    """
-    parsed = []
-    for element in sides:
-        parsed.append(float(element))
-    return sorted(parsed)
-
-
-def validate_sides(sides):
-    """
-    check if can be a triangle
-    """
-    if sides[0] + sides[1] <= sides[2]:
-        return False
-    return True
-
-
-def check_right(side_a, side_b, side_c):
-    """
-    check if it is a right triangle
-    """
-    if round(side_a * side_a, 2) + round(side_b * side_b, 2) == round(side_c * side_c, 2):
-        return True
-    return False
+def check_side(side_a, side_b, side_c):
+    """Checking sides a triangle"""
+    if side_a <= 0 or side_b <= 0 or side_c <= 0 or side_a >= 200 or side_b >= 200:
+        return 'InvalidInput'
+    if not (isinstance(side_a, int)
+            and isinstance(side_b, int)
+            and isinstance(side_c, int)) or side_c >= 200:
+        return 'InvalidInput'
+    if (side_a + side_b <= side_c) or (side_a + side_c <= side_b) or (side_b + side_c <= side_a):
+        return 'NotATriangle'
+    return None
