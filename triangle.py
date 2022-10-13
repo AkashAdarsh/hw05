@@ -10,14 +10,6 @@ def classify_triangle(side_a, side_b, side_c):
     """Logic"""
     if check_side(side_a, side_b, side_c) == 'InvalidInput':
         return "InvalidInput"
-    # if side_a <= 0 or side_b <= 0 or side_c <= 0 or side_a >= 200 or side_b >= 200:
-    #     return 'InvalidInput'
-    # if not(isinstance(side_a, int)
-    #         and isinstance(side_b, int)
-    #         and isinstance(side_c, int)) or side_c >= 200:
-    #     return 'InvalidInput'
-    # if (side_a + side_b <= side_c) or (side_a + side_c <= side_b) or (side_b + side_c <= side_a):
-    #     return 'NotATriangle'
 
     if side_a == side_b and side_b == side_c:
         return 'Equilateral'
